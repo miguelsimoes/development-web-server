@@ -3,7 +3,7 @@ MAINTAINER "Miguel Simões <msimoes@gmail.com>"
 #
 # Ensure that we have the latest packages associated with the image
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libssl1.0.0 php7.0-fpm php7.0-apcu-bc php7.0-apcu php7.0-bcmath php7.0-curl php7.0-cli php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-memcached php7.0-mysql php7.0-soap php7.0-sqlite3 php7.0-xdebug php7.0-xmlrpc php7.0-xsl runit wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libssl1.0.0 php7.0-fpm php7.0-apcu-bc php7.0-apcu php7.0-bcmath php7.0-curl php7.0-cli php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-memcached php7.0-mysql php7.0-soap php7.0-sqlite3 php7.0-xdebug php7.0-xmlrpc php7.0-xsl runit unzip wget
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq
 #
 # We need to ensure that the opcache directory is available for
@@ -17,6 +17,10 @@ RUN wget --quiet https://getcomposer.org/installer -O /tmp/composer-setup.php
 # Install the composer phar on a global scale of the container
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN chmod a+x /usr/local/bin/*
+#
+# Install the consul-template executable so it can access the required configuration
+RUN wget --quiet https://releases.hashicorp.com/consul-template/0.19.4/consul-template_0.19.4_linux_amd64.zip -O /tmp/consul-template.zip
+RUN unzip /tmp/consul-template.zip -d /usr/local/bin
 #
 # Ensure that the PHP CLI configuration is optimized for the environment
 RUN sed -i -e "s/;opcache.enable=0/opcache.enable=1/g"                                               /etc/php/7.0/cli/php.ini
