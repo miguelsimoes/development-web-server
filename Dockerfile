@@ -19,24 +19,26 @@ RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN chmod a+x /usr/local/bin/*
 #
 # Ensure that the PHP CLI configuration is optimized for the environment
-RUN sed -i -e "s/;opcache.enable=0/opcache.enable=1/g"                                               /etc/php/7.0/cli/php.ini
-RUN sed -i -e "s/;opcache.enable_cli=0/opcache.enable_cli=0/g"                                       /etc/php/7.0/cli/php.ini
-RUN sed -i -e "s/;opcache.file_cache=/opcache.file_cache=\"\/var\/tmp\/php\/opcache\"/g"             /etc/php/7.0/cli/php.ini
-RUN sed -i -e "s/;opcache.file_cache_only=0/opcache.file_cache_only=1/g"                             /etc/php/7.0/cli/php.ini
-RUN sed -i -e "s/;opcache.file_cache_consistency_checks=1/opcache.file_cache_consistency_checks=1/g" /etc/php/7.0/cli/php.ini
+RUN sed -i -e "s/;opcache.enable=0/opcache.enable=1/g"                                                    /etc/php/7.0/cli/php.ini
+RUN sed -i -e "s/;opcache.enable_cli=0/opcache.enable_cli=0/g"                                            /etc/php/7.0/cli/php.ini
+RUN sed -i -e "s/;opcache.file_cache=/opcache.file_cache=\"\/var\/tmp\/php\/opcache\"/g"                  /etc/php/7.0/cli/php.ini
+RUN sed -i -e "s/;opcache.file_cache_only=0/opcache.file_cache_only=1/g"                                  /etc/php/7.0/cli/php.ini
+RUN sed -i -e "s/;opcache.file_cache_consistency_checks=1/opcache.file_cache_consistency_checks=1/g"      /etc/php/7.0/cli/php.ini
 #
 # Ensure that the PHP-FPM configuration is optimized for the environment
-RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g"                                           /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/session.hash_function\s*=\s*0/session.hash_function=1/g"                            /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/memory_limit\s*=\s*128M/memory_limit=32M/g"                                         /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/;opcache.enable=0/opcache.enable=1/g"                                               /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/;opcache.max_accelerated_files=2000/;opcache.max_accelerated_files=4000/g"          /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/;opcache.interned_strings_buffer=4/opcache.interned_strings_buffer=8/g"             /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g"                             /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/;opcache.fast_shutdown=0/opcache.fast_shutdown=1/g"                                 /etc/php/7.0/fpm/php.ini
-RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize=no/g"                                                /etc/php/7.0/fpm/php-fpm.conf
-RUN sed -i -e "s/pm.max_children = 5/pm.max_children = 9/g"                                          /etc/php/7.0/fpm/pool.d/www.conf
-RUN sed -i -e "s/;clear_env\s*=\s*no/clear_env=no/g"                                                 /etc/php/7.0/fpm/pool.d/www.conf
+RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g'                                                /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/session.hash_function\s*=\s*0/session.hash_function=1/g'                                 /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/session.save_handler\s*=\s*files/session.save_handler=memcached/g'		          /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's#;session.save_path\s*=\s*"/var/lib/php/sessions"#session.save_path=172.17.0.1:11211#g'   /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/memory_limit\s*=\s*128M/memory_limit=32M/g'                                              /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/;opcache.enable=0/opcache.enable=1/g'                                                    /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/;opcache.max_accelerated_files=2000/;opcache.max_accelerated_files=4000/g'               /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/;opcache.interned_strings_buffer=4/opcache.interned_strings_buffer=8/g'                  /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g'                                  /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/;opcache.fast_shutdown=0/opcache.fast_shutdown=1/g'                                      /etc/php/7.0/fpm/php.ini
+RUN sed -i -e 's/;daemonize\s*=\s*yes/daemonize=no/g'                                                     /etc/php/7.0/fpm/php-fpm.conf
+RUN sed -i -e 's/pm.max_children = 5/pm.max_children=9/g'                                                 /etc/php/7.0/fpm/pool.d/www.conf
+RUN sed -i -e 's/;clear_env\s*=\s*no/clear_env=no/g'                                                      /etc/php/7.0/fpm/pool.d/www.conf
 #
 # We need to remove the modules we do not want to be available on PHP when running
 # on CLI
