@@ -1,4 +1,4 @@
 #!/bin/sh
 #
-/usr/sbin/php-fpm7.0 -c /etc/php/7.0/fpm -t && exec /usr/sbin/php-fpm7.0 -c /etc/php/7.0/fpm
+/usr/sbin/php-fpm7.1 -c /etc/php/7.1/fpm -t && exec /usr/sbin/php-fpm7.1 -c /etc/php/7.1/fpm
 
