@@ -37,6 +37,7 @@ RUN sed -i -e 's/;opcache.interned_strings_buffer=4/opcache.interned_strings_buf
 RUN sed -i -e 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g'                                  /etc/php/7.0/fpm/php.ini
 RUN sed -i -e 's/;opcache.fast_shutdown=0/opcache.fast_shutdown=1/g'                                      /etc/php/7.0/fpm/php.ini
 RUN sed -i -e 's/;daemonize\s*=\s*yes/daemonize=no/g'                                                     /etc/php/7.0/fpm/php-fpm.conf
+RUN sed -i -e 's#listen\s*=\s*/run/php/php7.2-fpm.sock#listen=/run/php/php-fpm.sock#g'                    /etc/php/7.2/fpm/pool.d/www.conf
 RUN sed -i -e 's/pm.max_children = 5/pm.max_children=9/g'                                                 /etc/php/7.0/fpm/pool.d/www.conf
 RUN sed -i -e 's/;clear_env\s*=\s*no/clear_env=no/g'                                                      /etc/php/7.0/fpm/pool.d/www.conf
 #
