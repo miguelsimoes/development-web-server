@@ -3,7 +3,7 @@ MAINTAINER "Miguel Simões <msimoes@gmail.com>"
 #
 # Ensure that we have the latest packages associated with the image
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libssl1.0.0 php7.2-fpm php7.2-apcu-bc php7.2-apcu php7.2-bcmath php7.2-curl php7.2-cli php7.2-json php7.2-mbstring php7.2-memcached php7.2-mysql php7.2-redis php7.2-soap php7.2-sqlite3 php7.2-xmlrpc php7.2-xsl wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libssl1.0.0 php7.2-fpm php7.2-apcu-bc php7.2-apcu php7.2-bcmath php7.2-curl php7.2-cli php7.2-intl php7.2-json php7.2-mbstring php7.2-memcached php7.2-mysql php7.2-redis php7.2-soap php7.2-sqlite3 php7.2-xmlrpc php7.2-xsl wget
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq
 #
 # We need to ensure that the opcache directory is available for
@@ -37,7 +37,7 @@ RUN sed -i -e 's/;opcache.interned_strings_buffer=4/opcache.interned_strings_buf
 RUN sed -i -e 's/;opcache.revalidate_freq=2/opcache.revalidate_freq=0/g'                                  /etc/php/7.2/fpm/php.ini
 RUN sed -i -e 's/;opcache.fast_shutdown=0/opcache.fast_shutdown=1/g'                                      /etc/php/7.2/fpm/php.ini
 RUN sed -i -e 's/;daemonize\s*=\s*yes/daemonize=no/g'                                                     /etc/php/7.2/fpm/php-fpm.conf
-RUN sed -i -e 's#listen\s*=\s*/run/php/php7.2-fpm.sock#listen=/run/php/php-fpm.sock#g'			  /etc/php/7.2/fpm/pool.d/www.conf
+RUN sed -i -e 's#listen\s*=\s*/run/php/php7.2-fpm.sock#listen=/run/php/php-fpm.sock#g'                    /etc/php/7.2/fpm/pool.d/www.conf
 RUN sed -i -e 's/pm.max_children = 5/pm.max_children=9/g'                                                 /etc/php/7.2/fpm/pool.d/www.conf
 RUN sed -i -e 's/;clear_env\s*=\s*no/clear_env=no/g'                                                      /etc/php/7.2/fpm/pool.d/www.conf
 #
