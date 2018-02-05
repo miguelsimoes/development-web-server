@@ -3,7 +3,7 @@ MAINTAINER "Miguel Simões <msimoes@gmail.com>"
 #
 # Ensure that we have the latest packages associated with the image
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libssl1.0.0 php7.1-fpm php7.1-apcu-bc php7.1-apcu php7.1-bcmath php7.1-curl php7.1-cli php7.1-json php7.1-mbstring php7.1-mcrypt php7.1-memcached php7.1-mysql php7.1-redis php7.1-soap php7.1-sqlite3 php7.1-xdebug php7.1-xmlrpc php7.1-xsl wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libssl1.0.0 php7.1-fpm php7.1-apcu-bc php7.1-apcu php7.1-bcmath php7.1-curl php7.1-cli php7.1-intl php7.1-json php7.1-mbstring php7.1-mcrypt php7.1-memcached php7.1-mysql php7.1-redis php7.1-soap php7.1-sqlite3 php7.1-xdebug php7.1-xmlrpc php7.1-xsl wget
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq
 #
 # We need to ensure that the opcache directory is available for
